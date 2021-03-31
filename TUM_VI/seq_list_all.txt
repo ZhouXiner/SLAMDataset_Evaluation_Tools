@@ -1,0 +1,5 @@
+Corridor1
+Outdoor1
+Room1
+Room2
+Room3
