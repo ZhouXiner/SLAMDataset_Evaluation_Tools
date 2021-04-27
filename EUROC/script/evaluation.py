@@ -97,17 +97,12 @@ def GetPartPose(old_path,erase_num,new_path):
     SaveTUMPose(new_path,new_poses,False)
 
 
-gt_path = "/home/zhouxin/evaluation/EUROC/gt_s"
+gt_path = "./EUROC/gt_s"
 eva_path = "/home/zhouxin/projects/PVIO/results"
 seq_list_path = "/home/zhouxin/evaluation/EUROC/seq_list_part.txt"
 seq_list = ReadSequence(seq_list_path)
-
-# for i in range(0,1300,100):
-#     result_save_path = "/home/zhouxin/evaluation/EUROC/result_" + str(i) + ".csv"
-#     results = Evaluate(gt_path,eva_path,seq_list,20,i)
-#     GetAverageResult(results)
-#     SaveResult(results,result_save_path)
-result_save_path = "/home/zhouxin/projects/PVIO/results/result.csv"
 results = Evaluate(gt_path,eva_path,seq_list,20,0)
 GetAverageResult(results)
-SaveResult(results,result_save_path)
+
+# result_save_path = "/home/zhouxin/projects/PVIO/results/result.csv"
+# SaveResult(results,result_save_path)
