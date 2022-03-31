@@ -27,7 +27,7 @@ def SaveTUMPose(save_path,Poses,csv_flags):
     else:
         with open(save_path,'w',encoding = 'utf-8') as f:
             for pose in Poses:
-                f.write("{} {} {} {} {} {} {} {}\n".format(pose[0],pose[1],pose[2],pose[3],pose[4],pose[5],pose[6],pose[7]))
+                f.write("{} {} {} {} {} {} {} {}\n".format(float(pose[0])*1e-9,pose[1],pose[2],pose[3],pose[4],pose[5],pose[6],pose[7]))
 
 
 def ReadSequence(list_path):
@@ -54,12 +54,13 @@ def Evaluate(gt_path,evaluate_path,seq_list,iter_num,erase_num):
             eva_part_path = evaluate_path + "/" + seq_list[j] + "_{}".format(i) + "part.txt"
             if(erase_num != 0):
                 GetPartPose(eva_seq_path,erase_num,eva_part_path)
-                cmd_eva = "evo_ape tum {} {} -a".format(gt_seq_path,eva_part_path)
+                cmd_eva = "evo_ape tum {} {} -a -p".format(gt_seq_path,eva_part_path)
                 eva_count = len(open(eva_part_path,'r').readlines())
 
             else:
                 cmd_eva = "evo_ape tum {} {} -a".format(gt_seq_path,eva_seq_path)
                 eva_count = len(open(eva_seq_path,'r').readlines())
+                print(cmd_eva)
 
             res = subprocess.check_output(cmd_eva, shell=True)
             res = str(res)
@@ -98,11 +99,15 @@ def GetPartPose(old_path,erase_num,new_path):
 
 
 gt_path = "/home/zhouxin/evaluation/TUM_VI/gt_s"
-eva_path = "/home/zhouxin/GitHub/ORB_SLAM3_loop/result_TUM_VI"
+eva_path = "/home/zhouxin/papers/pvio_expriments/pvio/tumvi/plane"
 seq_list_path = "/home/zhouxin/evaluation/TUM_VI/seq_list_all.txt"
 seq_list = ReadSequence(seq_list_path)
 
 result_save_path = "/home/zhouxin/evaluation/TUM_VI/result.csv"
-results = Evaluate(gt_path,eva_path,seq_list,10,0)
+results = Evaluate(gt_path,eva_path,seq_list,1,0)
 GetAverageResult(results)
-SaveResult(results,result_save_path)
+# SaveResult(results,result_save_path)
+# path = "/home/zhouxin/GitHub/ORB_SLAM3/result_TUM_VI/Corridor1_1s.txt"
+# save_path = "/home/zhouxin/GitHub/ORB_SLAM3/result_TUM_VI/Corridor1_1.txt"
+# pose =  OpenTUMPose(path,False)
+# SaveTUMPose(save_path,pose,False)

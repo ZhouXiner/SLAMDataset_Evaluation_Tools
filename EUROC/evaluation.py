@@ -54,7 +54,7 @@ def Evaluate(gt_path,evaluate_path,seq_list,iter_num,erase_num):
             eva_part_path = evaluate_path + "/" + seq_list[j] + "_{}".format(i) + "part.txt"
             if(erase_num != 0):
                 GetPartPose(eva_seq_path,erase_num,eva_part_path)
-                cmd_eva = "evo_ape tum {} {} -a".format(gt_seq_path,eva_part_path)
+                cmd_eva = "evo_ape tum {} {} -a -p".format(gt_seq_path,eva_part_path)
                 eva_count = len(open(eva_part_path,'r').readlines())
 
             else:
@@ -63,6 +63,7 @@ def Evaluate(gt_path,evaluate_path,seq_list,iter_num,erase_num):
 
             res = subprocess.check_output(cmd_eva, shell=True)
             res = str(res)
+            print(cmd_eva)
             result = res.split("\\n")
             gt_count = len(open(gt_seq_path,'r').readlines())
             for info in result:
@@ -97,12 +98,13 @@ def GetPartPose(old_path,erase_num,new_path):
     SaveTUMPose(new_path,new_poses,False)
 
 
-gt_path = "./EUROC/gt_s"
-eva_path = "/home/zhouxin/projects/PVIO/results"
-seq_list_path = "/home/zhouxin/evaluation/EUROC/seq_list_part.txt"
+gt_path = "/home/zhouxin/evaluation/EUROC/gt_s"
+eva_path = "/media/zhouxin/66D231E0D231B4E12/Dataset/RPVIO/EuRoc/csv_results"
+seq_list_path = "/home/zhouxin/evaluation/EUROC/seq_list_all.txt"
 seq_list = ReadSequence(seq_list_path)
-results = Evaluate(gt_path,eva_path,seq_list,20,0)
-GetAverageResult(results)
 
-# result_save_path = "/home/zhouxin/projects/PVIO/results/result.csv"
-# SaveResult(results,result_save_path)
+
+result_save_path = "/home/zhouxin/evaluation/EUROC/result.csv"
+results = Evaluate(gt_path,eva_path,seq_list,10,0)
+GetAverageResult(results)
+SaveResult(results,result_save_path)

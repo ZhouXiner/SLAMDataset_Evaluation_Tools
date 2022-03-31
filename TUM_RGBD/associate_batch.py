@@ -59,13 +59,15 @@ def associate(first_list, second_list,offset,max_difference):
     return matches
 
 if __name__ == '__main__':
-    data_path = "/home/zhouxin/data1/data-1/Dataset/TUM_RGBD/TUM"
+    data_path = "/media/zhouxin/66D231E0D231B4E12/Dataset/TUM_RGBD/TUM"
     dirs = os.listdir(data_path)
     for sequence_dir in dirs:
         sequence_path = os.path.join(data_path, sequence_dir)
         rgb_path = sequence_path + "/rgb.txt"
         depth_path = sequence_path + "/depth.txt"
         accosiate_path = sequence_path + "/" + sequence_dir + ".txt"
+        remove_cmd = "rm {}".format(accosiate_path)
+        os.system(remove_cmd)
         print(rgb_path,depth_path,accosiate_path)
         first_list = read_file_list(rgb_path)
         second_list = read_file_list(depth_path)

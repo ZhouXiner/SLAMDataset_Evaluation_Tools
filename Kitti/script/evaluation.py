@@ -27,7 +27,7 @@ def Evaluate(gt_path,evaluate_path,seq_list,num):
             result = res.split("\\n")
             for info in result:
                 detail = info.split("\\t")
-                if(detail[0].strip() == "mean"):
+                if(detail[0].strip() == "rmse"):
                     print(seq_list[j],detail[1])
                     one_result.append(detail[1])
                     print_flag = True
@@ -39,6 +39,6 @@ def Evaluate(gt_path,evaluate_path,seq_list,num):
 
 seq_list_path = "/home/zhouxin/evaluation/Kitti/seq_list.txt"
 gt_path = "/home/zhouxin/evaluation/Kitti/gt"
-eva_path = "/home/zhouxin/GitHub/ECIM/results"
+eva_path = "/home/zhouxin/GitHub/ORB_SLAM3_loop/resultkitti"
 seq_list = ReadSequence(seq_list_path)
 results = Evaluate(gt_path,eva_path,seq_list,1)
